@@ -1,33 +1,41 @@
+# **************************************************
+# * TARGET NAME                                    *
+# **************************************************
 NAME = output
 
-INC_DIR = ./inc/
-
-SRC_DIR = ./src/
+# **************************************************
+# * SOURCE/INCLUDE                                 *
+# **************************************************
+INC_PATH = ./inc
+SRC_PATH = ./src
 SRC = main.cpp
-
-SRCS = $(addprefix $(SRC_DIR), $(SRC))
+SRCS = $(addprefix $(SRC_PATH)/, $(SRC))
 OBJS = $(SRCS:.cpp=.o)
 
+# **************************************************
+# * VARIABLE                                       *
+# **************************************************
 CXX = c++
 CXXFLAGS = -std=c++11 #-Wall -Wextra -Werror
-CPPFLAGS = -I $(INC_DIR)
+CPPFLAGS = -I $(INC_PATH)
 LDFLAGS= -framework OpenGL -framework GLUT
 
-RM = rm -rf
-
+# **************************************************
+# * RULE                                           *
+# **************************************************
 all: $(NAME)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(OBJS) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(OBJS) -o $@
 
 clean:
-	$(RM) $(OBJS)
+	rm -f $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	rm -f $(NAME)
 
 re:
 	make fclean
